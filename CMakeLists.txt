@@ -91,10 +91,7 @@ add_library(st_hal_config INTERFACE)
 target_include_directories(st_hal_config INTERFACE config-example)
 
 set(ST_HAL_SOURCES
-    # ${CMAKE_SOURCE_DIR}/Core/Src/system_stm32f1xx.c
-     ${CMAKE_SOURCE_DIR}/stm32f1-drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c
-     ${CMAKE_SOURCE_DIR}/stm32f1-drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c
-     ${CMAKE_SOURCE_DIR}/stm32f1-drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c
+     stm32f1xx_hal_gpio.c
 )
 
 add_subdirectory(stm32f1-drivers)

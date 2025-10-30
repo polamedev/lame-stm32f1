@@ -29,10 +29,17 @@ target_include_directories(stm32f1-drivers PUBLIC
 
 # Добавление всех файлов .c в библиотеку
 if (NOT ST_HAL_SOURCES)
+    # Если список файлов не задан, то компилируем все исходники
     file(GLOB ST_HAL_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/STM32F1xx_HAL_Driver/Src/*.c")  
+else()
+    # Иначе добавляем к списку файлов  необходимые и компилируем только их
+    list(TRANSFORM ST_HAL_SOURCES PREPEND "STM32F1xx_HAL_Driver/Src/")
 endif()
 target_sources(stm32f1-drivers 
     PRIVATE 
+    CMSIS/Device/ST/STM32F1xx/Source/Templates/system_stm32f1xx.c
+     
+    STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.c
     ${ST_HAL_SOURCES}
 )
 
