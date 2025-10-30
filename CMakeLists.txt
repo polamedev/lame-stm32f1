@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.21)
 
+include("cmake/gcc-arm-none-eabi.cmake")
+
+
 # Основные настройки проекта
 project(
     lame-stm32f1
@@ -9,6 +12,8 @@ project(
     LANGUAGES C
 )
 
+# Include toolchain file
+# project(${CMAKE_PROJECT_NAME})
 # Определяем является ли текущий проектом верхнего уровня. Для fetch проектов, gitsubmodule или просто вложенных проектов это неверно
 # string(COMPARE EQUAL "${CMAKE_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}" is_top_level)
 # Но в новых версиях 3.21 можно использовать ${PROJECT_IS_TOP_LEVEL}
@@ -80,5 +85,12 @@ target_include_directories(lame-stm32f1
 # -----------------------------------------------------------------------------------------------------------------------------------
 
 add_subdirectory(lame)
+
+
+add_library(st_hal_config INTERFACE)
+target_include_directories(st_hal_config INTERFACE config-example)
+
+add_subdirectory(drivers)
+
 # add_subdirectory(lame-stm32f1/tests)
 
