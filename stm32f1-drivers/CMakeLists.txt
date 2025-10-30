@@ -8,15 +8,15 @@ set(ST_HAL_MCU_NAME STM32F103xB CACHE STRING "Тип процесса в HAL")
 
 # Создание цели библиотеки
 # Ключевое слово STATIC - говорит о создание статической библиотеке
-add_library(st_hal STATIC)
+add_library(stm32f1-drivers STATIC)
 
-target_compile_definitions(st_hal 
+target_compile_definitions(stm32f1-drivers 
     PUBLIC 
     USE_HAL_DRIVER
     ${ST_HAL_MCU_NAME}
 )
 
-target_include_directories(st_hal PUBLIC 
+target_include_directories(stm32f1-drivers PUBLIC 
     # мои инклуды
     include
     # CMASIS
@@ -28,18 +28,20 @@ target_include_directories(st_hal PUBLIC
 )
 
 # Добавление всех файлов .c в библиотеку
-file(GLOB HAL_Src "${CMAKE_CURRENT_SOURCE_DIR}/STM32F1xx_HAL_Driver/Src/*.c")  
-target_sources(st_hal 
+if (NOT ST_HAL_SOURCES)
+    file(GLOB ST_HAL_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/STM32F1xx_HAL_Driver/Src/*.c")  
+endif()
+target_sources(stm32f1-drivers 
     PRIVATE 
-    ${HAL_Src}
+    ${ST_HAL_SOURCES}
 )
 
 # # Подключаем библиотеки 
 # # Ключевое слово PUBLIC говорит, что библиотека нужна для сборки цели и для интерфейса данной цели
-target_link_libraries(st_hal
+target_link_libraries(stm32f1-drivers
     PRIVATE
     st_hal_config
 )
 
-target_compile_options(st_hal PRIVATE -Wno-unused-parameter -Wno-pedantic)
+target_compile_options(stm32f1-drivers PRIVATE -Wno-unused-parameter -Wno-pedantic)
 
