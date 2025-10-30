@@ -1,0 +1,6 @@
+[submodule "lame-stm32"]
+	path = lame-stm32
+	url = git@github.com:polamedev/lame-stm32.git
+[submodule "lame"]
+	path = lame
+	url = git@github.com:polamedev/lame.git
